@@ -23,12 +23,18 @@ const socket = new KikSocket({
     kik_version_info: config.kik_version_info
 })
 
+import { Configuration, OpenAIApi } from "openai";
+const configuration = new Configuration({
+    organization: "org-SplVYKKC7LUPIXRGqAc5G7n5",
+    apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+const response = await openai.listEngines();
 const iqCaller = socket.iqCaller
 
 socket.on('online', () => {
     console.log("Successfully logged in as", socket.options.jid);
     getRoster()
-
 })
 
 socket.on("receivedroster", (groups, friends) => {
